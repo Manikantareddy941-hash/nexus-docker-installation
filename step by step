@@ -1,0 +1,53 @@
+Prerequisite
+
+Docker installed and running
+Check:
+
+docker --version
+docker ps
+
+
+If Docker isn’t installed, stop here. Install Docker first.
+
+Nexus Installation (Docker)
+docker volume create nexus-data
+
+docker run -d \
+--name nexus \
+-p 8081:8081 \
+-v nexus-data:/nexus-data \
+--restart unless-stopped \
+sonatype/nexus3
+
+
+That’s it. Nexus is installing in the background.
+
+Access Nexus
+
+Open browser:
+
+http://<server-ip>:8081
+
+
+Local machine:
+
+http://localhost:8081
+
+
+Startup takes 2–3 minutes. If you panic early, that’s on you.
+
+Get Admin Password (MOST PEOPLE MESS THIS UP)
+docker exec -it nexus cat /nexus-data/admin.password
+
+
+Username: admin
+
+Password: output of above command
+
+Verify Container Health
+docker ps
+
+docker logs -f nexus
+
+
+If it’s not running → you screwed Docker or ports.
